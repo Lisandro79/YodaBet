@@ -1,11 +1,14 @@
 import time
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import telegram_send
 from GamesManager import GamesManager
-from config import url
+from config import url, token, chat_id
+import telegram
+
 
 if __name__ == '__main__':
+    request = telegram.utils.request.Request(read_timeout=2)
+    bot = telegram.Bot(token, request=request)
     gm = GamesManager()
 
     while True:
@@ -21,6 +24,6 @@ if __name__ == '__main__':
             if gm.is_valid_game(game):
                 if gm.is_new_game(game):
                     msg = gm.format_message(game)
-                    telegram_send.send(messages=[msg], parse_mode="Markdown")
+                    bot.sendMessage(chat_id, msg, parse_mode="Markdown")
                     gm.games.append(game)
         time.sleep(10)

@@ -7,7 +7,7 @@ import telegram
 
 
 if __name__ == '__main__':
-    request = telegram.utils.request.Request(read_timeout=2)
+    request = telegram.utils.request.Request(read_timeout=10)  # The read timeout for network connections in seconds.
     bot = telegram.Bot(token, request=request)
     gm = GamesManager()
 
@@ -24,6 +24,7 @@ if __name__ == '__main__':
             if gm.is_valid_game(game):
                 if gm.is_new_game(game):
                     msg = gm.format_message(game)
-                    bot.sendMessage(chat_id, msg, parse_mode="Markdown")
+                    print(msg)
+                    # bot.sendMessage(chat_id, msg, parse_mode="Markdown")
                     gm.games.append(game)
         time.sleep(10)

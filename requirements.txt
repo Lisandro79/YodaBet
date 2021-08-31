@@ -5,4 +5,5 @@ bs4~=0.0.1
 requests>=2.20.0
 beautifulsoup4~=4.9.3
 python-telegram-bot
-telegram
+telegram~=0.0.1
+python-dateutil~=2.8.1

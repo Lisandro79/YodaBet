@@ -1,9 +1,6 @@
 from datetime import datetime
 from dateutil import tz
 
-# def utc_to_local_timezone(utc_datetime, local_timezone='Europe/London'):
-#     local_time = utc_datetime.replace(tzinfo=pytz.utc).astimezone(local_timezone)
-#     return local_time.strftime("%Y-%m-%d %H:%M:%S")
 
 class GamesManager:
     def __init__(self):
@@ -12,7 +9,7 @@ class GamesManager:
     @staticmethod
     def is_valid_game(football_game):
         is_soccer = football_game[0] == 'soccer'
-        has_proper_length = len(football_game) == 9
+        has_proper_length = len(football_game) == 10
         if is_soccer:
             odds_in_range = float(football_game[7]) <= 2.5
             is_draw = football_game[3] == 'X'
@@ -34,7 +31,7 @@ class GamesManager:
     @staticmethod
     def format_time(time_str):
         hr_min_sec = time_str.split(':')
-        hour = hr_min_sec[0].replace('0', '') + 'hr'
+        hour = str(int(hr_min_sec[0])) + 'hr'
         minute = hr_min_sec[1] + 'min'
         return hour + ' ' + minute
 

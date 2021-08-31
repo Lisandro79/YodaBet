@@ -16,11 +16,13 @@ if __name__ == '__main__':
             page = urlopen(url)
         except Exception as e:
             print(e)
+            break
 
         soup = BeautifulSoup(page, 'html.parser')
-        content = soup.find('table', {'class': 'table table-striped table-bordered'})
-        for row in soup.select('tbody tr'):
+        rows = soup.find_all('tr', class_='accordion-toggle')
+        for row in rows:
             game = [x.text for x in row.find_all('td')]
+            game.append(row['data-matchid'])
             if gm.is_valid_game(game):
                 if gm.is_new_game(game):
                     msg = gm.format_message(game)
@@ -28,3 +30,4 @@ if __name__ == '__main__':
                     # bot.sendMessage(chat_id, msg, parse_mode="Markdown")
                     gm.games.append(game)
         time.sleep(10)
+

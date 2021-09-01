@@ -27,7 +27,9 @@ if __name__ == '__main__':
                 if gm.is_new_game(game):
                     msg = gm.format_message(game)
                     print(msg)
-                    # bot.sendMessage(chat_id, msg, parse_mode="Markdown")
+                    bot.sendMessage(chat_id, msg, parse_mode="Markdown")
+                    # url = "https://api.telegram.org/botXyz:wwwwDFSJSJSAX/sendMessage?chat_id=@telechanneltesting&text=message"
+                    # requests.post(url)
                     gm.games.append(game)
         time.sleep(10)
 

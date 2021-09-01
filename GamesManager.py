@@ -17,7 +17,10 @@ class GamesManager:
             odds_in_range = False
             is_draw = False
 
-        return is_soccer and has_proper_length and odds_in_range and not is_draw
+        bookies = ['William Hill', 'Bet365', 'bwin', 'BetVictor', 'Paddy Power', 'Betfair', 'Unibet', 'Betway']
+        is_valid_bookie = football_game[6] in bookies
+
+        return is_soccer and has_proper_length and odds_in_range and not is_draw and is_valid_bookie
 
     def is_new_game(self, new_game):
         return not any([True if new_game[1] == gg[1] else False for gg in self.games])
@@ -55,13 +58,12 @@ class GamesManager:
         *New Value Opportunity*\n \
         *Match*: {lst[1]}\n \
         *League*: {lst[2]}\n \
-        Result to bet: *{result}*\n \
-        Targeted Value Odds: *{lst[7]}*\n \
-        Bookmaker: {lst[6]}\n \
-        Kick off time: {kick_off_time}\n \
+        *Result to bet*: {result}\n \
+        *Targeted Value Odds*: {lst[7]}\n \
+        *Bookmaker*: {lst[6]}\n \
+        *Kick off time*: {kick_off_time}\n \
         Time to start of the game: {time_to_kickoff}\n \
-        Remember to only bet if the value odds are still live and \n \
-        only bet with the same stake (2/100th of total bankroll).\n \
+        \n_Remember to only bet if the value odds are still live and only bet with the same stake (1/50th of total bankroll)._
         '''
         return message
 

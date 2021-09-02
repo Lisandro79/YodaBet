@@ -2,12 +2,10 @@ from datetime import datetime
 from dateutil import tz
 
 
-class GamesManager:
-    def __init__(self):
-        self.games = []
+class Formatter:
 
     @staticmethod
-    def is_valid_game(football_game):
+    def is_valid_game_format(football_game):
         is_soccer = football_game[0] == 'soccer'
         has_proper_length = len(football_game) == 10
         if is_soccer:
@@ -22,20 +20,14 @@ class GamesManager:
 
         return is_soccer and has_proper_length and odds_in_range and not is_draw and is_valid_bookie
 
-    def is_new_game(self, new_game):
-        return not any([True if new_game[1] == gg[1] else False for gg in self.games])
-
-    def remove_game_from_list(self):
-        pass
-
-    def add_game_to_list(self):
-        pass
-
     @staticmethod
     def format_time(time_str):
         hr_min_sec = time_str.split(':')
         hour = str(int(hr_min_sec[0])) + 'hr'
-        minute = hr_min_sec[1] + 'min'
+        if int(hr_min_sec[0]) < 1 and int(hr_min_sec[1]) < 1:
+            minute = '01 min'
+        else:
+            minute = hr_min_sec[1] + 'min'
         return hour + ' ' + minute
 
     def format_message(self, lst):

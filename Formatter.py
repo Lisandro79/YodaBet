@@ -3,11 +3,9 @@ from dateutil import tz
 
 
 class Formatter:
-    def __init__(self):
-        self.games = []
 
     @staticmethod
-    def is_valid_game(football_game):
+    def is_valid_game_format(football_game):
         is_soccer = football_game[0] == 'soccer'
         has_proper_length = len(football_game) == 10
         if is_soccer:
@@ -21,9 +19,6 @@ class Formatter:
         is_valid_bookie = football_game[6] in bookies
 
         return is_soccer and has_proper_length and odds_in_range and not is_draw and is_valid_bookie
-
-    def is_new_game(self, new_game):
-        return not any([True if new_game[1] == gg[1] else False for gg in self.games])
 
     @staticmethod
     def format_time(time_str):

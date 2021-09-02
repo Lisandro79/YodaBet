@@ -11,14 +11,8 @@ if __name__ == '__main__':
     request = telegram.utils.request.Request(read_timeout=10)  # The read timeout for network connections in seconds.
     bot = telegram.Bot(token, request=request)
     gm = Formatter()
-    log = Logger(log_file_name)  # Opens log file
-
-
-
-    # load games into dataframe
-    # append games
-    # check games
-    # serialize games
+    logger = Logger(log_file_name)  # load games into dataframe
+    df = logger.load_games()
 
     while True:
         try:
@@ -30,14 +24,14 @@ if __name__ == '__main__':
         soup = BeautifulSoup(page, 'html.parser')
         rows = soup.find_all('tr', class_='accordion-toggle')
         for row in rows:
+            match_id = row['data-matchid']
             game = [x.text for x in row.find_all('td')]
-            game.append(row['data-matchid'])
-            if gm.is_valid_game(game):
-                if gm.is_new_game(game):
-                    msg = gm.format_message(game)
-                    print(msg)
-                    # bot.sendMessage(chat_id, msg, parse_mode="Markdown")
-                    log.add_game(game)
-                    gm.games.append(game)
-        time.sleep(10)
-
+            game.append(match_id)
+            if gm.is_valid_game_format(game) and logger.is_new_game(df, match_id):
+                msg = gm.format_message(game)
+                print(msg)
+                bot.sendMessage(chat_id, msg, parse_mode="Markdown")
+                df = logger.add_game(df, game)
+        time.sleep(5)
+        # serialize games
+        df.to_csv(logger.file_name, index=False)

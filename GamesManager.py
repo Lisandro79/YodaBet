@@ -35,7 +35,10 @@ class GamesManager:
     def format_time(time_str):
         hr_min_sec = time_str.split(':')
         hour = str(int(hr_min_sec[0])) + 'hr'
-        minute = hr_min_sec[1] + 'min'
+        if int(hr_min_sec[0]) < 1 and int(hr_min_sec[1]) < 1:
+            minute = '01 min'
+        else:
+            minute = hr_min_sec[1] + 'min'
         return hour + ' ' + minute
 
     def format_message(self, lst):

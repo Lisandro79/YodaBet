@@ -2,7 +2,7 @@ from datetime import datetime
 from dateutil import tz
 
 
-class GamesManager:
+class Formatter:
     def __init__(self):
         self.games = []
 
@@ -24,12 +24,6 @@ class GamesManager:
 
     def is_new_game(self, new_game):
         return not any([True if new_game[1] == gg[1] else False for gg in self.games])
-
-    def remove_game_from_list(self):
-        pass
-
-    def add_game_to_list(self):
-        pass
 
     @staticmethod
     def format_time(time_str):

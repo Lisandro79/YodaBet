@@ -131,4 +131,4 @@ dmypy.json
 .idea/
 config.py
 ToDos
-test.py
+games_logs.csv

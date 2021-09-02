@@ -1,15 +1,24 @@
 import time
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-from GamesManager import GamesManager
-from config import url, token, chat_id
+from Formatter import Formatter
+from config import url, token, chat_id, log_file_name
 import telegram
+from Logger import Logger
 
 
 if __name__ == '__main__':
     request = telegram.utils.request.Request(read_timeout=10)  # The read timeout for network connections in seconds.
     bot = telegram.Bot(token, request=request)
-    gm = GamesManager()
+    gm = Formatter()
+    log = Logger(log_file_name)  # Opens log file
+
+
+
+    # load games into dataframe
+    # append games
+    # check games
+    # serialize games
 
     while True:
         try:
@@ -27,9 +36,8 @@ if __name__ == '__main__':
                 if gm.is_new_game(game):
                     msg = gm.format_message(game)
                     print(msg)
-                    bot.sendMessage(chat_id, msg, parse_mode="Markdown")
-                    # url = "https://api.telegram.org/botXyz:wwwwDFSJSJSAX/sendMessage?chat_id=@telechanneltesting&text=message"
-                    # requests.post(url)
+                    # bot.sendMessage(chat_id, msg, parse_mode="Markdown")
+                    log.add_game(game)
                     gm.games.append(game)
         time.sleep(10)
 

@@ -2,7 +2,7 @@ import time
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from Formatter import Formatter
-from config import url, token, chat_id, log_file_name
+from config import url, token, chat_id, log_file_name, token_saldinor, chat_id_saldinor
 import telegram
 from Logger import Logger
 
@@ -10,6 +10,7 @@ from Logger import Logger
 if __name__ == '__main__':
     request = telegram.utils.request.Request(read_timeout=10)  # The read timeout for network connections in seconds.
     bot = telegram.Bot(token, request=request)
+    bot_test = telegram.Bot(token_saldinor, request=request)
     gm = Formatter()
     logger = Logger(log_file_name)  # load games into dataframe
     df = logger.load_games()
@@ -31,6 +32,9 @@ if __name__ == '__main__':
                 msg = gm.format_message(game)
                 print(msg)
                 bot.sendMessage(chat_id, msg, parse_mode="Markdown")
+                time.sleep(0.1)
+                bot_test.sendMessage(chat_id_saldinor, msg, parse_mode="Markdown")
+                time.sleep(0.1)
                 df = logger.add_game(df, game)
         time.sleep(5)
         # serialize games

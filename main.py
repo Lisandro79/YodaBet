@@ -20,6 +20,7 @@ if __name__ == '__main__':
             page = urlopen(url)
         except Exception as e:
             print(e)
+            bot_test.sendMessage(chat_id_saldinor, "Server Down!", parse_mode="Markdown")
             break
 
         soup = BeautifulSoup(page, 'html.parser')
